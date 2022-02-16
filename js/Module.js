@@ -20,7 +20,7 @@ const bulkcreate = (dbtable,data) => {
     } else {
         console.log("Please provide product details; eg. seller, price etc")
     }
-    
+    return flag;
 }
 
 // check text box validation
@@ -42,7 +42,7 @@ const getData = (dbtable, fn) =>{
     let index = 0;
     let obj = {};
 
-    dbtable.count(count => {
+    dbtable.count((count) => {
         if(count){
             dbtable.each(table => {
                obj = Sortobj(table);
@@ -76,5 +76,6 @@ export default productdb;
 export{
     bulkcreate,
     getData,
-    createEle
+    createEle,
+    Sortobj
 }

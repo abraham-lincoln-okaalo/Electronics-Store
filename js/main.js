@@ -52,7 +52,13 @@ btnupdate.onclick = () => {
             seller:seller.value,
             price:price.value
         }).then((updated) =>{
-            let get = updated ? `data Updated` : `Couldn't update data`;
+            // let get = updated ? `data Updated` : `Couldn't update data`;
+
+            let get = updated ? true : false;
+
+            let updatemsg = document.querySelector(".updatemsg");
+            getMsg(get, updatemsg);
+            proname.value=seller.value=price.value="";
         })
     }
 }
@@ -66,6 +72,9 @@ btndelete.onclick = () => {
     });
     db.open();
     table();
+    textID
+    let deletemsg = document.querySelector(".deletemsg");
+    getMsg(true, deletemsg);
 }
 
 // window onload event
@@ -137,7 +146,7 @@ function getMsg(flag, element){
         element.className += "movedown";
         setTimeout(()=>{
             element.classList.forEach(classname => {
-                classname =="movedown" ? undefined : element.classList.removee("movedown");
+                classname == "movedown" ? undefined : element.classList.remove("movedown");
             });
         }, 4000);
     }
