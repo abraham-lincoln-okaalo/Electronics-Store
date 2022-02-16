@@ -23,17 +23,58 @@ const bulkcreate = (dbtable,data) => {
     
 }
 
-// check textbox validation
+// check text box validation
 const empty = object =>{
     let flag = false;
 
     for(const value in object){
-        if(object[value] !="" && object.hasOwnProperty(value)){
-            flag = true
+        if(object[value] != "" && object.hasOwnProperty(value)){
+            flag = true;
         } else {
             flag = false;
         }
     }
     return flag;
 }
+
+// getting the data from the db
+const getData = (dbtable, fn) =>{
+    let index = 0;
+    let obj = {};
+
+    dbtable.count(count => {
+        if(count){
+            dbtable.each(table => {
+               obj = Sortobj(table);
+               fn(obj, index++);
+            })
+        } else {
+            fn(0);
+        }
+    })
+}
+
+// sorting the data
+const Sortobj = sortobj => {
+    let obj = {};
+    obj = {
+        id:sortobj.id,
+        name:sortobj.name,
+        seller:sortobj.seller,
+        price:sortobj.price
+    }
+    return obj;
+}
+
+// dynamically display table
+const createEle = (tagname, appendTo, fn) => {
+    const element = document.createElement(tagname);
+    if(appendTo)appendTo.appendChild(element);
+    if(fn)fn(element);
+}
 export default productdb;
+export{
+    bulkcreate,
+    getData,
+    createEle
+}
