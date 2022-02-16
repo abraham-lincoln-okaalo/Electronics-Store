@@ -16,6 +16,8 @@ const btnread = document.getElementById("btn-read");
 const btnupdate = document.getElementById("btn-update");
 const btndelete = document.getElementById("btn-delete");
 
+// not found
+const notfound = document.getElementById("notfound")
 // insert values using the create button
 btncreate.onclick = (event) => {
     let flag = bulkcreate(db.products, {
@@ -23,7 +25,6 @@ btncreate.onclick = (event) => {
         seller:seller.value,
         price:price.value
     })
-    console.log(flag);
 
     /*proname.value="";
     seller.value="";
@@ -33,6 +34,10 @@ btncreate.onclick = (event) => {
     getData(db.products, (data) => {
         userid.value=data.id + 1 || 1;
     });
+
+    table();
+    let insertmsg = document.querySelector(".insertmsg");
+    getMsg(flag, insertmsg); 
 }
 
 // create a read event on read button 
@@ -63,6 +68,16 @@ btndelete.onclick = () => {
     table();
 }
 
+// window onload event
+window.onload = () => {
+    textID(userid);
+}
+
+function textID(textboxid){
+    getData(db.products, data => {
+        textboxid.value = data.id + 1 || 1;
+    })
+}
 function table(){
     const tbody = document.getElementById("tbody");
 
@@ -93,6 +108,8 @@ function table(){
                     })
                 })
             })
+        }else {
+            notfound.textContent = "No record found in the database...!";
         }
     })
 }
@@ -113,4 +130,15 @@ function deletebtn(event){
     let id = parseInt(event.target.dataset.id);
     db.products.delete(id);
     table();
+}
+
+function getMsg(flag, element){
+    if(flag){
+        element.className += "movedown";
+        setTimeout(()=>{
+            element.classList.forEach(classname => {
+                classname =="movedown" ? undefined : element.classList.removee("movedown");
+            });
+        }, 4000);
+    }
 }
