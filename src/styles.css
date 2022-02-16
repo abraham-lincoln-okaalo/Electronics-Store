@@ -7,6 +7,16 @@
     padding: 0.3em 2.4em;
 }
 
-.table{
+.container table{
     margin: 1em 10em;
+}
+
+table .btnedit{
+    color: lightgreen;
+    cursor: pointer;
+}
+
+table .btndelete{
+    color: tomato;
+    cursor: pointer;
 }
