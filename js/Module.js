@@ -1,9 +1,9 @@
 const productdb = (dbname, table) => {
-    //create database
 
-    const db = new Dexie(dbname)
+    //create database
+    const db = new Dexie(dbname);
     db.version(1).stores(table);
-    db.open()
+    db.open();
     // const db = new Dexie('myDb');
     // db.version(1).stores({
     //     friends:`name, age`
@@ -28,7 +28,7 @@ const empty = object =>{
     let flag = false;
 
     for(const value in object){
-        if(object[value] != "" && object.hasOwnProperty(value)){
+        if(object[value] != " " && object.hasOwnProperty(value)){
             flag = true;
         } else {
             flag = false;
@@ -38,16 +38,17 @@ const empty = object =>{
 }
 
 // getting the data from the db
-const getData = (dbtable, fn) =>{
+const getData = (dbname, fn) =>{
     let index = 0;
     let obj = {};
 
-    dbtable.count((count) => {
+    dbname.count((count) => {
+        // count rows using count method
         if(count){
-            dbtable.each(table => {
+            dbname.each(table => {
                obj = Sortobj(table);
                fn(obj, index++);
-            })
+            });
         } else {
             fn(0);
         }
@@ -55,7 +56,7 @@ const getData = (dbtable, fn) =>{
 }
 
 // sorting the data
-const Sortobj = sortobj => {
+const Sortobj = (sortobj) => {
     let obj = {};
     obj = {
         id:sortobj.id,
@@ -69,9 +70,11 @@ const Sortobj = sortobj => {
 // dynamically display table
 const createEle = (tagname, appendTo, fn) => {
     const element = document.createElement(tagname);
-    if(appendTo)appendTo.appendChild(element);
-    if(fn)fn(element);
+    if(appendTo) appendTo.appendChild(element);
+    if(fn) fn(element);
 }
+
+
 export default productdb;
 export{
     bulkcreate,
